@@ -1,4 +1,8 @@
 const fs = require("fs");
+const http = require("http")
+//////////////////////////////
+////// FILES
+
 
 // const hello = "Hello world";
 
@@ -23,23 +27,35 @@ const fs = require("fs");
 
 // complex version with multiple callbacks
 
-fs.readFile("./txt/start.txt","utf-8", 
+// fs.readFile("./txt/start.txt","utf-8", 
   //first callback
-  (err, data1) => {console.log(data1);
-    fs.readFile(`./txt/${data1}.txt`,"utf-8", 
-      //second callback
-  (err, data2) => {
-    console.log(data2);
-    fs.readFile(`./txt/append.txt`,"utf-8", 
-      //third callback
-    (err, data3) => {
-      console.log(data3);
-      fs.writeFile("./txt/final.txt", `${data2} \n ${data3}`,"utf-8", (err) => {
-        console.log("writing file");
-      })
-    })})
-  }
+//   (err, data1) => {console.log(data1);
+//     fs.readFile(`./txt/${data1}.txt`,"utf-8", 
+//       //second callback
+//   (err, data2) => {
+//     console.log(data2);
+//     fs.readFile(`./txt/append.txt`,"utf-8", 
+//       //third callback
+//     (err, data3) => {
+//       console.log(data3);
+//       fs.writeFile("./txt/final.txt", `${data2} \n ${data3}`,"utf-8", (err) => {
+//         console.log("writing file");
+//       })
+//     })})
+//   }
 
 
-);
-console.log("reading file");
+// );
+// console.log("reading file");
+
+//////////////////////////////
+////// SERVERS
+
+const server = http.createServer((req, res) => {
+  
+  res.end("hello from the server");
+});
+
+server.listen(8000, "127.0.0.1", () => {
+console.log("listening from server");
+});
