@@ -1,5 +1,6 @@
 const fs = require("fs");
 const http = require("http")
+const url = require("url")
 //////////////////////////////
 ////// FILES
 
@@ -51,11 +52,40 @@ const http = require("http")
 //////////////////////////////
 ////// SERVERS
 
-const server = http.createServer((req, res) => {
+// const server = http.createServer((req, res) => {
   
-  res.end("hello from the server");
+//   res.end("hello from the server");
+// });
+
+// server.listen(8000, "127.0.0.1", () => {
+// console.log("listening from server");
+// });
+
+//////////////////////////////
+////// ROUTING
+
+
+const server = http.createServer((req, res) => {
+  const pathName = req.url
+  if (pathName === "/overview" || pathName === "/"){
+    
+    res.end("This is the OVERVIEW page of the website");
+  } else if (pathName === "/product") {
+    res.end("This is the product catagory of my website");
+  } else {
+    res.writeHead(404, {
+      "content-type" : "text/html"
+    })
+    res.end("<h1>Page Not found</h1>");
+
+  }
+  
+
+
+
 });
 
 server.listen(8000, "127.0.0.1", () => {
 console.log("listening from server");
 });
+
