@@ -1,5 +1,7 @@
 const fs = require("fs");
-const http = require("http")
+const http = require("http");
+const { dirname } = require("path");
+const { json } = require("stream/consumers");
 const url = require("url")
 //////////////////////////////
 ////// FILES
@@ -65,6 +67,10 @@ const url = require("url")
 ////// ROUTING
 
 
+const data = fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8",);
+const dataObj = JSON.parse(data)
+
+
 const server = http.createServer((req, res) => {
   const pathName = req.url
   if (pathName === "/overview" || pathName === "/"){
@@ -72,16 +78,15 @@ const server = http.createServer((req, res) => {
     res.end("This is the OVERVIEW page of the website");
   } else if (pathName === "/product") {
     res.end("This is the product catagory of my website");
-  } else {
+  } else if (pathName === "/api"){
+      res.writeHead(200, {"content-type" : "application/json"});
+      res.end(data);} else {
     res.writeHead(404, {
       "content-type" : "text/html"
-    })
+    });
     res.end("<h1>Page Not found</h1>");
 
   }
-  
-
-
 
 });
 
